@@ -93,3 +93,7 @@ const PORT = 5000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on PORT ${PORT}`);
 });
+// ბექენდში (index.js)
+app.use(cors({
+  origin: 'https://speedly-delivery.onrender.com' // შენი ფრონტენდის ლინკი
+}));

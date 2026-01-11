@@ -242,19 +242,23 @@ const checkOrder = async () => {
 const trackOrder = async () => {
   if (!orderId.value) return
 
-  isLoading.value = true
+  isLoading.value = true 
   error.value = ''
   order.value = null
 
   try {
+    // დავამატეთ ხელოვნური დაყოვნება ეფექტისთვის
     await new Promise(resolve => setTimeout(resolve, 800))
-    // დაემატა / ნიშანი api/orders-ის შემდეგ
+
+    // ყურადღება: დაემატა / ნიშანი orders-ის შემდეგ
     const res = await axios.get(`https://speedly-backend-0wmc.onrender.com/api/orders/${orderId.value.trim()}`)
+    
     order.value = res.data
   } catch (err) {
+    console.error(err)
     error.value = 'ამანათი ამ ნომრით ვერ მოიძებნა'
   } finally {
-    isLoading.value = false
+    isLoading.value = false 
   }
 }
 </script>
