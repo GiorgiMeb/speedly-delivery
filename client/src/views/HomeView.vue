@@ -257,6 +257,12 @@ const trackOrder = async () => {
     isLoading.value = false // აქ გამოირთვება ანიმაცია
   }
 }
+
+const closeResult = () => {
+  order.value = null
+  error.value = ''
+  orderId.value = '' // სურვილისამებრ, ასუფთავებს ჩაწერილ ID-საც
+}
 </script>
 
 <style scoped>
