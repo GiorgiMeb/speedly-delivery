@@ -13,9 +13,9 @@ const ADMIN_PASSWORD = "zdarovabratuxa404@!";
 
 // MongoDB კავშირი
 // ყურადღება: როცა ინტერნეტში გაუშვებ, 127.0.0.1 უნდა შეიცვალოს MongoDB Atlas-ის ლინკით
-mongoose.connect('mongodb://127.0.0.1:27017/delivery')
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log('MongoDB connection error:', err));
+mongoose.connect('mongodb+srv://admin:giorgi2026@nodetuts.rvecn.mongodb.net/delivery?retryWrites=true&w=majority&appName=Nodetuts')
+    .then(() => console.log('✅ Atlas Connected!'))
+    .catch(err => console.log('❌ Error:', err));
 
 const OrderSchema = new mongoose.Schema({
   orderId: String,
