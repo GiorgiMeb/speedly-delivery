@@ -230,38 +230,31 @@ const checkOrder = async () => {
   if (!orderId.value) return
   try {
     error.value = ''
-    const res = await axios.get(`http://192.168.100.42:5000/api/orders/${orderId.value.trim()}`)
+    // დაემატა / ნიშანი api/orders-ის შემდეგ
+    const res = await axios.get(`https://speedly-backend-0wmc.onrender.com/api/orders/${orderId.value.trim()}`)
     order.value = res.data
   } catch {
     error.value = 'ამანათი მოცემული ID-ით ვერ მოიძებნა'
     order.value = null
   }
 }
-const closeResult = () => {
-  order.value = null
-  error.value = ''
-  orderId.value = '' // სურვილისამებრ, ასუფთავებს ძებნის ველსაც
-}
-
-const isLoading = ref(false)
 
 const trackOrder = async () => {
   if (!orderId.value) return
 
-  isLoading.value = true // ანიმაციის ჩართვა
+  isLoading.value = true
   error.value = ''
   order.value = null
 
   try {
-    // პატარა ხელოვნური დაყოვნება (მაგ: 800ms), რომ ანიმაცია კარგად გამოჩნდეს
     await new Promise(resolve => setTimeout(resolve, 800))
-
-    const res = await axios.get(`http://192.168.100.42:5000/api/orders/${orderId.value}`)
+    // დაემატა / ნიშანი api/orders-ის შემდეგ
+    const res = await axios.get(`https://speedly-backend-0wmc.onrender.com/api/orders/${orderId.value.trim()}`)
     order.value = res.data
   } catch (err) {
     error.value = 'ამანათი ამ ნომრით ვერ მოიძებნა'
   } finally {
-    isLoading.value = false // ანიმაციის გამორთვა
+    isLoading.value = false
   }
 }
 </script>

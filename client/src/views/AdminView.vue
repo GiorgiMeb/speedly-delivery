@@ -107,6 +107,9 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
+// შენი ახალი ბექენდის მისამართი
+const API_BASE_URL = 'https://speedly-backend-0wmc.onrender.com/api'
+
 // ავტორიზაციის ცვლადები
 const isAuthenticated = ref(false)
 const passInput = ref('')
@@ -118,16 +121,16 @@ const allOrders = ref([])
 // 1. ავტორიზაციის ფუნქცია
 const handleLogin = async () => {
   try {
-    // გაგზავნა სერვერზე
-    const res = await axios.post('http://192.168.100.42:5000/api/login', {
+    // ჩანაცვლებულია ახალი ლინკით
+    const res = await axios.post(`${API_BASE_URL}/login`, {
       password: passInput.value
     })
     
     if (res.data.success) {
       isAuthenticated.value = true
-      localStorage.setItem('isAdmin', 'true') // ვინახავთ სტატუსს
+      localStorage.setItem('isAdmin', 'true')
       loginError.value = ''
-      await fetchOrders() // მონაცემების წამოღება მხოლოდ წარმატების შემდეგ
+      await fetchOrders()
     }
   } catch (err) {
     loginError.value = "არასწორი პაროლი!"
@@ -143,7 +146,8 @@ const logout = () => {
 
 const fetchOrders = async () => {
   try {
-    const res = await axios.get('http://192.168.100.42:5000/api/all-orders')
+    // ჩანაცვლებულია ახალი ლინკით
+    const res = await axios.get(`${API_BASE_URL}/all-orders`)
     allOrders.value = res.data
   } catch (err) {
     console.error("მონაცემების წამოღება ვერ მოხერხდა", err)
@@ -152,7 +156,8 @@ const fetchOrders = async () => {
 
 const addOrder = async () => {
   try {
-    await axios.post('http://192.168.100.42:5000/api/orders', {
+    // ჩანაცვლებულია ახალი ლინკით
+    await axios.post(`${API_BASE_URL}/orders`, {
       phone: form.value.phone,
       status: form.value.status,
       currentLocation: form.value.location,
@@ -174,7 +179,8 @@ const addOrder = async () => {
 const deleteOrder = async (id) => {
   if (confirm('ნამდვილად გსურთ ამ ჩანაწერის წაშლა?')) {
     try {
-      await axios.delete(`http://192.168.100.42:5000/api/orders/${id}`)
+      // ჩანაცვლებულია ახალი ლინკით
+      await axios.delete(`${API_BASE_URL}/orders/${id}`)
       await fetchOrders()
     } catch (err) {
       alert('წაშლისას მოხდა შეცდომა')
@@ -194,7 +200,6 @@ const copyToClipboard = (id) => {
 }
 
 onMounted(() => {
-  // ვამოწმებთ არის თუ არა უკვე დალოგინებული
   if (localStorage.getItem('isAdmin') === 'true') {
     isAuthenticated.value = true
     fetchOrders()
