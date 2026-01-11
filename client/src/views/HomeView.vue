@@ -225,6 +225,7 @@ import axios from 'axios'
 const orderId = ref('')
 const order = ref(null)
 const error = ref('')
+const isLoading = ref(false) // ეს ხაზი აკლია
 
 const checkOrder = async () => {
   if (!orderId.value) return
@@ -242,23 +243,18 @@ const checkOrder = async () => {
 const trackOrder = async () => {
   if (!orderId.value) return
 
-  isLoading.value = true 
+  isLoading.value = true // აქ ჩაირთვება ანიმაცია
   error.value = ''
   order.value = null
 
   try {
-    // დავამატეთ ხელოვნური დაყოვნება ეფექტისთვის
-    await new Promise(resolve => setTimeout(resolve, 800))
-
-    // ყურადღება: დაემატა / ნიშანი orders-ის შემდეგ
+    // აუცილებლად დაამატე / ნიშანი orders-ის შემდეგ
     const res = await axios.get(`https://speedly-backend-0wmc.onrender.com/api/orders/${orderId.value.trim()}`)
-    
     order.value = res.data
   } catch (err) {
-    console.error(err)
     error.value = 'ამანათი ამ ნომრით ვერ მოიძებნა'
   } finally {
-    isLoading.value = false 
+    isLoading.value = false // აქ გამოირთვება ანიმაცია
   }
 }
 </script>
