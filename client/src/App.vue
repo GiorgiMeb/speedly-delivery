@@ -8,7 +8,7 @@ onMounted(() => {
   // 3 წამიანი დაყოვნება
   setTimeout(() => {
     isAppReady.value = true
-  }, 3000)
+  }, 2000)
 })
 </script>
 
