@@ -2,11 +2,10 @@
 import { ref, onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 
-// ცვლადი აპლიკაციის მზადყოფნისთვის
 const isAppReady = ref(false)
 
 onMounted(() => {
-  // აიძულებს ლოადერს მინიმუმ 3 წამი გაჩერდეს
+  // 3 წამიანი დაყოვნება
   setTimeout(() => {
     isAppReady.value = true
   }, 3000)
@@ -14,10 +13,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="isAppReady">
+  <div v-if="!isAppReady" class="initial-loader">
+    <div class="spinner"></div>
+    <div class="loader-text">Speedly იტვირთება...</div>
+  </div>
+
+  <div v-else>
     <nav class="navbar navbar-light bg-white shadow-sm sticky-top">
       <div class="container d-flex justify-content-between align-items-center">
-        
         <div class="mobile-only">
           <a href="tel:+995555123456" class="mobile-icon-link">
             <i class="bi bi-telephone-fill"></i>
@@ -50,7 +53,6 @@ onMounted(() => {
             <i class="bi bi-envelope-at-fill"></i>
           </a>
         </div>
-
       </div>
     </nav>
 
@@ -59,50 +61,42 @@ onMounted(() => {
 </template>
 
 <style>
-/* შენი არსებული სტილები უცვლელად რჩება */
-html, body {
-  overflow-x: hidden;
-  width: 100%;
-  position: relative;
-}
-
-.logo-img {
-  height: 45px;
-  width: auto;
-  object-fit: contain;
-  transition: 0.3s;
-}
-
-.mobile-icon-link {
-  font-size: 1.5rem;
-  color: #0d6efd;
+/* ლოადერის სტილები App.vue-სთვის */
+.initial-loader {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #ffffff;
+}
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #0d6efd;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+.loader-text {
+  color: #0d6efd;
+  font-weight: bold;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-.mobile-only {
-  display: none;
-}
-
+/* შენი არსებული სტილები */
+html, body { overflow-x: hidden; width: 100%; position: relative; }
+.logo-img { height: 45px; width: auto; object-fit: contain; transition: 0.3s; }
+.mobile-icon-link { font-size: 1.5rem; color: #0d6efd; display: flex; align-items: center; }
+.mobile-only { display: none; }
 @media (max-width: 991px) {
-  .mobile-only {
-    display: block;
-    width: 40px;
-    text-align: center;
-  }
-
-  .navbar-brand {
-    margin: 0 auto !important;
-  }
-
-  .logo-img {
-    height: 40px;
-  }
+  .mobile-only { display: block; width: 40px; text-align: center; }
+  .navbar-brand { margin: 0 auto !important; }
+  .logo-img { height: 40px; }
 }
-
-#app {
-  max-width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
+#app { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
 </style>
