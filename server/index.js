@@ -9,7 +9,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 // პაროლი - ყოველთვის ტექსტის ფორმატში
-const ADMIN_PASSWORD = "zdarovabratuxa404@!"; 
+const ADMIN_PASSWORD = "Sergioramos@24"; 
 
 // MongoDB კავშირი
 // ყურადღება: როცა ინტერნეტში გაუშვებ, 127.0.0.1 უნდა შეიცვალოს MongoDB Atlas-ის ლინკით
